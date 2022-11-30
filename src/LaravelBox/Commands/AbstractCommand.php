@@ -51,6 +51,10 @@ abstract class AbstractCommand
 
     public function getFolderId(string $path)
     {
+        if(is_numeric($path)) {
+            return $path;
+        }
+
         if (dirname($path) == '.') {
             return -1;
         }
