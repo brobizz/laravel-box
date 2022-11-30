@@ -24,7 +24,7 @@ abstract class AbstractCommand
         // if (Cache::has($path)) {
         //     return Cache::get($path);
         // }
-        $folder = dirname($path);
+        $folder = trim(dirname($path),'/');
         $folderId = 0; // base case of root
         if ($folder != '/' && $folder != '.') {
             // if not root
