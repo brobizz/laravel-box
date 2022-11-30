@@ -19,21 +19,20 @@ class DownloadStreamCommand extends AbstractCommand
     public function execute()
     {
         $fileId = $this->fileId;
-        $token = $this->token;
 
-        $url = "https://api.box.com/2.0/files/${fileId}/content";
+        $url = 'https://api.box.com/2.0/files/' . $fileId . '/content';
         $tmpFile = tmpfile();
         $stream = stream_for($tmpFile);
         $options = [
             'sink' => $stream,
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer ' . $this->token,
             ],
         ];
 
         try {
             $client = new Client();
-            $resp = $client->request('GET', $url, $options);
+            $resp = $client->get($url, $options);
 
             return ApiResponseFactory::build($resp, $stream);
         } catch (ClientException $e) {
