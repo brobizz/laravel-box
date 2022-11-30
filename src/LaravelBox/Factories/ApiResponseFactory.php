@@ -146,7 +146,7 @@ class ApiResponseFactory
                 $response->setJson($json);
 
                 return $response;
-            }  elseif (property_exists($json, 'item_status')) {
+            } elseif (property_exists($json, 'item_status')) {
                 $type = 'VIEW_FILE';
                 $code = 200;
                 $reason = 'Ok';
@@ -156,6 +156,18 @@ class ApiResponseFactory
                 $response->setCode($code);
                 $response->setReason($reason);
                 $response->setFileName($fileName);
+                $response->setBody($body);
+                $response->setJson($json);
+
+                return $response;
+            } elseif (property_exists($json, '$template')) {
+                $type = 'VIEW_FILE_META_DATA';
+                $code = 200;
+                $reason = 'Ok';
+
+                $response = new ApiResponse($type);
+                $response->setCode($code);
+                $response->setReason($reason);
                 $response->setBody($body);
                 $response->setJson($json);
 
