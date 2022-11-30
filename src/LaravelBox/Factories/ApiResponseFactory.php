@@ -107,7 +107,7 @@ class ApiResponseFactory
             return $response;
         } else {
             $body = $arg;
-            $json = json_decode($arg);
+            $json = json_decode($arg->getBody()->getContents());
             if (property_exists($json, 'status') && $json->status >= 400) {
                 // ERROR Occurred
                 $type = $json->type;
