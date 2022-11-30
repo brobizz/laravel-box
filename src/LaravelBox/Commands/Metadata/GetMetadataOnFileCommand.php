@@ -29,14 +29,14 @@ class GetMetadataOnFileCommand extends AbstractMetadataTemplateCommand
 
         $options = [
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer ' . $this->token,
                 'Content-Type' => "application/json",
             ],
         ];
 
         try {
             $client = new Client();
-            $req = $client->request('GET', $url, $options);
+            $req = $client->get($url, $options);
 
             return ApiResponseFactory::build($req);
         } catch (ClientException $e) {

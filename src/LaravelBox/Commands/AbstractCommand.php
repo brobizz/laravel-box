@@ -78,14 +78,14 @@ abstract class AbstractCommand
     public function fileExists(string $fileId)
     {
         try {
-            $url = "https://api.box.com/2.0/files/${fileId}";
+            $url = 'https://api.box.com/2.0/files/'. $fileId;
             $options = [
                 'headers' => [
-                    'Authorization' => "Bearer ${$this->token}",
+                    'Authorization' => 'Bearer ' . $this->token,
                 ],
             ];
             $client = new Client();
-            $resp = $client->request('GET', $url, $optons);
+            $resp = $client->get($url, $options);
 
             return $resp->getStatusCode() < 400;
         } catch (ClientException $e) {
@@ -96,14 +96,14 @@ abstract class AbstractCommand
     public function folderExists(string $folderId)
     {
         try {
-            $url = "https://api.box.com/2.0/folders/${folderId}";
+            $url = 'https://api.box.com/2.0/folders/' . $folderId;
             $options = [
                 'headers' => [
-                    'Authorization' => "Bearer ${$this->token}",
+                    'Authorization' => 'Bearer ' . $this->token,
                 ],
             ];
             $client = new Client();
-            $resp = $client->request('GET', $url, $optons);
+            $resp = $client->get($url, $options);
 
             return $resp->getStatusCode() < 400;
         } catch (ClientException $e) {
@@ -117,16 +117,15 @@ abstract class AbstractCommand
             return -1;
         }
 
-        $token = $this->token;
-        $url = "https://api.box.com/2.0/folders/${folderId}";
+        $url = 'https://api.box.com/2.0/folders/' . $folderId;
         $options = [
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer ' . $this->token,
             ],
         ];
         try {
             $client = new \GuzzleHttp\Client();
-            $req = $client->request('GET', $url, $options);
+            $req = $client->get($url, $options);
             $json = json_decode($req->getBody());
 
             return $json->item_collection->total_count;
@@ -139,11 +138,10 @@ abstract class AbstractCommand
     {
         $limit_min = 100;
         $limit_max = 1000;
-        $token = $this->token;
-        $url = "https://api.box.com/2.0/folders/${folderId}/items";
+        $url = 'https://api.box.com/2.0/folders/' . $folderId;
         $options = [
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer ' . $this->token,
             ],
             'query' => [
                 'fields' => 'name',
@@ -153,7 +151,7 @@ abstract class AbstractCommand
         ];
         try {
             $client = new \GuzzleHttp\Client();
-            $req = $client->request('GET', $url, $options);
+            $req = $client->get($url, $options);
 
             return json_decode($req->getBody());
         } catch (Exception $e) {

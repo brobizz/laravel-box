@@ -18,17 +18,16 @@ class GetFileInformationCommand extends AbstractFileCommand
     public function execute()
     {
         $fileId = $this->fileId;
-        $token = $this->token;
-        $url = "https://api.box.com/2.0/files/${fileId}";
+        $url = 'https://api.box.com/2.0/files/' .$fileId;
         $options = [
         'headers' => [
-            'Authorization' => "Bearer ${token}",
+            'Authorization' => 'Bearer ' . $this->token,
         ],
         ];
 
         try {
             $client = new Client();
-            $req = $client->request('GET', $url, $options);
+            $req = $client->get($url, $options);
 
             return ApiResponseFactory::build($req);
         } catch (ClientException $e) {

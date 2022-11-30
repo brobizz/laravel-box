@@ -29,26 +29,25 @@ class GetFolderItemsCommand extends AbstractFolderCommand
 
     public function execute()
     {
-        $token = $this->token;
         $folderId = $this->folderId;
         $offset = $this->offset;
         $limit = $this->limit;
         $params = $this->params;
-        $url = "https://api.box.com/2.0/folders/${folderId}/items";
+        $url = 'https://api.box.com/2.0/folders/' . $folderId . '/items';
         $options = [
             'query' => [
                 'offset' => ($offset >= 0) ? $offset : 0,
                 'limit' => ($limit >= 1) ? ($limit <= 1000) ? $limit : 1000 : 1,
             ],
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer ' . $this->token,
             ],
         ];
         $options['query'] = array_merge($options['query'], $params);
         
         try {
             $client = new Client();
-            $resp = $client->request('GET', $url, $options);
+            $resp = $client->get($url, $options);
 
             return ApiResponseFactory::build($resp);
         } catch (ClientException $e) {

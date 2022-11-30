@@ -16,21 +16,20 @@ class FolderItemCount extends AbstractCommand
 
     public function execute()
     {
-        $token = $this->token;
         $folderId = $this->folderId;
         if ($folderId < 0) {
             return -1;
         }
 
-        $url = "https://api.box.com/2.0/folders/${folderId}";
+        $url = 'https://api.box.com/2.0/folders/' . $folderId;
         $options = [
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer ' . $this->token,
             ],
         ];
         try {
             $client = new \GuzzleHttp\Client();
-            $req = $client->request('GET', $url, $options);
+            $req = $client->get($url, $options);
             $json = json_decode($req->getBody());
 
             return $json->item_collection->total_count;

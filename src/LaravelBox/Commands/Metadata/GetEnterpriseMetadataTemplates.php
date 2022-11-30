@@ -20,18 +20,17 @@ class GetEnterpriseMetadataTemplates extends AbstractMetadataTemplateCommand
 
     public function execute()
     {
-        $token = $this->token;
         $url = "https://api.box.com/2.0/metadata_templates/enterprise";
         $options = [
             'body' => json_encode([]),
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer ' . $this->token,
             ],
         ];
 
         try {
             $client = new Client();
-            $req = $client->request('GET', $url, $options);
+            $req = $client->get($url, $options);
             return ApiResponseFactory::build($req);
         } catch (ClientException $e) {
             return ApiResponseFactory::build($e);
