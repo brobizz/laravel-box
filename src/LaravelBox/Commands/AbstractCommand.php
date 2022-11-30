@@ -142,7 +142,7 @@ abstract class AbstractCommand
     {
         $limit_min = 100;
         $limit_max = 1000;
-        $url = 'https://api.box.com/2.0/folders/' . $folderId;
+        $url = 'https://api.box.com/2.0/folders/' . $folderId . '/items';
         $options = [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->token,
