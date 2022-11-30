@@ -25,16 +25,16 @@ class DownloadFileCommand extends AbstractFileCommand
     {
         $fileId = $this->fileId;
         $token = $this->token;
-        $url = "https://api.box.com/2.0/files/${fileId}/content";
+        $url = 'https://api.box.com/2.0/files/' .$fileId. '/content';
         $options = [
             'sink' => fopen($this->downloadPath, 'w'),
             'headers' => [
-                'Authorization' => "Bearer ${token}",
+                'Authorization' => 'Bearer '. $this->token,
             ],
         ];
         try {
             $client = new Client();
-            $resp = $client->request('GET', $url, $options);
+            $resp = $client->get($url, $options);
 
             return ApiResponseFactory::build($resp);
         } catch (ClientException $e) {
