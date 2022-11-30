@@ -157,7 +157,7 @@ abstract class AbstractCommand
             $client = new \GuzzleHttp\Client();
             $req = $client->get($url, $options);
 
-            return json_decode($req->getBody());
+            return json_decode($req->getBody()->getContents());
         } catch (Exception $e) {
             return json_decode(json_encode([]));
         }
