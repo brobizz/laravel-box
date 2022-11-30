@@ -146,7 +146,7 @@ abstract class AbstractCommand
             'query' => [
                 'fields' => 'name',
                 'offset' => ($offset < 0) ? 0 : $offset,
-                'limit' => ($limit < 0) ? $limit_min : ($limit > $limit_max) ? $limit_max : $limit,
+                'limit' => ($limit < 0) ? $limit_min : (($limit > $limit_max) ? $limit_max : $limit),
             ],
         ];
         try {
