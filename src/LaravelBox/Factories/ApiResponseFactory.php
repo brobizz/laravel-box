@@ -135,7 +135,6 @@ class ApiResponseFactory
 
                 return $response;
             } elseif (property_exists($json, 'total_count')) {
-                // PREFLIGHT CHECK
                 $type = 'LIST_FILES';
                 $code = 200;
                 $reason = 'Ok';
@@ -143,6 +142,20 @@ class ApiResponseFactory
                 $response = new ApiResponse($type);
                 $response->setCode($code);
                 $response->setReason($reason);
+                $response->setBody($body);
+                $response->setJson($json);
+
+                return $response;
+            }  elseif (property_exists($json, 'item_status')) {
+                $type = 'VIEW_FILE';
+                $code = 200;
+                $reason = 'Ok';
+                $fileName = $json->name;
+
+                $response = new ApiResponse($type);
+                $response->setCode($code);
+                $response->setReason($reason);
+                $response->setFileName($fileName);
                 $response->setBody($body);
                 $response->setJson($json);
 
