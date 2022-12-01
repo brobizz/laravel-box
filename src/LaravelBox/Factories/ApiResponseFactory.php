@@ -16,7 +16,7 @@ class ApiResponseFactory
             return null;
         }
 
-        if (func_num_args() == 2 && func_get_arg(1) instanceof \GuzzleHttp\Stream\Stream) {
+        if (func_num_args() == 2 && func_get_arg(1) instanceof \GuzzleHttp\Psr7\Stream) {
             return self::handleStreamResponse(func_get_arg(0), func_get_arg(1));
         }
 
